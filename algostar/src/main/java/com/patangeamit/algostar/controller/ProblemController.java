@@ -1,10 +1,11 @@
 package com.patangeamit.algostar.controller;
 
+import com.patangeamit.algostar.dto.CreateProblemRequest;
 import com.patangeamit.algostar.model.Problem;
 import com.patangeamit.algostar.service.ProblemService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -28,7 +29,13 @@ public class ProblemController {
     }
 
     @PostMapping
-    public Problem createProblem(@RequestBody Problem problem) {
+    public Problem createProblem(@Valid @RequestBody CreateProblemRequest request) {
+
+        Problem problem = new Problem();
+        problem.setTitle(request.title());
+        problem.setDescription(request.description());
+        problem.setDifficulty(request.difficulty());
+
         return service.createProblem(problem);
     }
 }
